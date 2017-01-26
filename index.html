@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stream Instagram Photos to Website</title>
+  <meta name="description" content="Stream Instagram Photos to Website with jquery">
+  <meta name="keywords" content="HTML,CSS,JavaScript,Instagram,Stream,Photos,jQuery">
+  <meta name="author" content="Panayiotis Georgiou">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+          
+  <style type="text/css">
+    #InstaFeed{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    display: inline;
+    }
+    #InstaFeed li{
+      float:left;
+      width:150px;
+      height:150px;
+      margin:10px;
+    }
+    #InstaFeed li img{
+      max-width:100%;
+      max-height:100%;
+    }
+    h1{
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+	<div>
+		<h1 class="center-align">My instagram feed</h1>
+	</div>
+	<div class="container">
+		<!--display instagram photos-->
+		<ul id="InstaFeed"></ul>
+		<!--#END# display instagram photos-->
+	
+		<h2 class="center-align"><a href="" title="Stream Instagram Photos to Website - jQuery">Back to tutorial</a></h2>
+	
+	</div>
+	<footer>
+	<div class="footer-copyright">
+	    <div class="container">
+			2017 © <a class="grey-text" href="http://www.panayiotisgeorgiou.net/">Panayiotis Georgiou</a>
+	    </div>
+	</div>
+    </footer>
+	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var token = ""; //your access token here. Visit http://instagram.pixelunion.net/ to get your access token
+        num_photos = 20; //limit number of photos
+
+      $.ajax({
+          url: 'https://api.instagram.com/v1/users/self/media/recent',
+          dataType: 'jsonp',
+          type: 'GET',
+          data: {access_token: token, count: num_photos},
+          success: function(data){
+              console.log(data);
+              for( x in data.data ){
+                  $('ul').append('<li><a target="_blank" href="'+data.data[x].link+'"><img src="'+data.data[x].images.low_resolution.url+'"></a></li>');
+              }
+          },
+          error: function(data){
+              console.log(data);
+          }
+      });
+    });
+  </script>
+</body>
+</html>
